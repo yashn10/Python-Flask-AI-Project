@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+*.env
+
+# Sensitive files
+*.key
+*.secret
+*.pem
+
+# Local development
+*.log
+.DS_Store
+
+# Output directory for generated images
+/static/output/*
+!/static/output/.gitkeep
+
+# Vercel
+.vercel

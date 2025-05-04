@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- Hero Section -->
+<section class="text-center py-20">
+    <h2 class="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+        Create Stunning Images with AI</h2>
+    <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">Transform your ideas into vibrant visuals using our
+        cutting-edge text-to-image AI. Enter a prompt, choose a style, and watch your imagination come to life.</p>
+    <a href="/generate"
+        class="flex w-[19%] mx-auto inline-block bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition card-hover"><i
+            class="mr-2" data-lucide="wand-2"></i> Start Generating Now</a>
+</section>
+
+<!-- Features Section -->
+<section class="py-16">
+    <h3 class="text-3xl font-semibold text-center mb-12">Why Choose Our AI Image Generator?</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="card bg-gray-800 bg-opacity-80 p-6 rounded-lg card-hover">
+            <h4 class="text-xl font-semibold mb-4">Fast & High-Quality</h4>
+            <p class="text-gray-300">Generate high-resolution images in seconds with the powerful FLUX.1 model.</p>
+        </div>
+        <div class="card bg-gray-800 bg-opacity-80 p-6 rounded-lg card-hover">
+            <h4 class="text-xl font-semibold mb-4">Customizable Styles</h4>
+            <p class="text-gray-300">Choose from styles like digital art, photography, or 3D renders to match your
+                vision.</p>
+        </div>
+        <div class="card bg-gray-800 bg-opacity-80 p-6 rounded-lg card-hover">
+            <h4 class="text-xl font-semibold mb-4">User-Friendly Interface</h4>
+            <p class="text-gray-300">Intuitive design makes it easy for anyone to create stunning visuals, no skills
+                required.</p>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="text-center py-16 bg-gray-800 bg-opacity-80 rounded-lg">
+    <h3 class="text-3xl font-semibold mb-4">Ready to Unleash Your Creativity?</h3>
+    <p class="text-gray-300 mb-8">Join thousands of creators bringing their ideas to life with our AI.</p>
+    <a href="/generate"
+        class="inline-block bg-pink-500 text-white px-6 py-3 rounded-lg hover:bg-pink-600 transition card-hover">Try It
+        Now</a>
+</section>
+{% endblock %}

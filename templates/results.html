@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="py-8">
+    <h2 class="text-3xl font-semibold text-center mb-5">Your Generated Images</h2>
+    <p class="text-gray-300 text-center mb-8">Your Prompt: {{ prompt }}</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {% for image in images %}
+        <div class="card bg-gray-800 bg-opacity-80 rounded-lg overflow-hidden card-hover">
+            <img src="/images/{{ image }}" alt="Generated Image" class="w-full h-64 object-cover cursor-pointer"
+                onclick="openFullscreen('/images/{{ image }}')">
+            <div class="p-4 flex justify-between">
+                <a href="/download/{{ image }}"
+                    class="flex items-center justify-center inline-block text-center bg-green-500 text-white p-2 rounded-md hover:bg-green-600 transition"><i
+                        class="mr-2" data-lucide="download"></i>Download</a>
+                <button onclick="openFullscreen('/images/{{ image }}')"
+                    class="flex items-center justify-center inline-block text-center bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition"><i
+                        class="mr-2" data-lucide="maximize"></i>Fullscreen</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="text-center mt-8">
+        <a href="/generate"
+            class="inline-block bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition card-hover">Generate
+            More</a>
+    </div>
+</div>
+
+<!-- Fullscreen Modal -->
+<div id="fullscreen-modal" class="fixed inset-0 bg-black bg-opacity-90 hidden flex items-center justify-center z-50">
+    <img id="fullscreen-image" src="" alt="Fullscreen Image" class="max-w-full max-h-full object-contain">
+    <button onclick="closeFullscreen()"
+        class="absolute top-4 right-4 text-white bg-gray-800 p-2 rounded-full hover:bg-gray-700 transition">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+    </button>
+</div>
+
+<script>
+    function openFullscreen(src) {
+        const modal = document.getElementById('fullscreen-modal');
+        const img = document.getElementById('fullscreen-image');
+        img.src = src;
+        modal.classList.remove('hidden');
+    }
+
+    function closeFullscreen() {
+        const modal = document.getElementById('fullscreen-modal');
+        modal.classList.add('hidden');
+    }
+</script>
+{% endblock %}
