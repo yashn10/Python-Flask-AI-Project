@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="max-w-md mx-auto bg-gray-800 bg-opacity-80 rounded-lg shadow-xl p-8 mt-10 card-hover animate-fade-in">
+    <h2 class="text-2xl font-semibold text-purple-400 mb-6 text-center">Sign Up</h2>
+    {% if error %}
+    <p class="text-red-400 mb-4 text-center">{{ error }}</p>
+    {% endif %}
+    <form id="signup-form" action="/signup" method="POST" class="space-y-6">
+        <div class="relative">
+            <label for="username" class="block text-sm font-medium text-gray-300">Username</label>
+            <div class="mt-1 flex items-center">
+                <i data-lucide="user" class="absolute left-3 w-5 h-5 text-gray-400"></i>
+                <input id="username" name="username" type="text" required
+                    class="block w-full pl-10 p-3 bg-gray-700 border border-gray-600 rounded-md focus:ring-purple-500 focus:border-purple-500 text-white transition-all duration-300"
+                    placeholder="Your username">
+            </div>
+        </div>
+        <div class="relative">
+            <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
+            <div class="mt-1 flex items-center">
+                <i data-lucide="mail" class="absolute left-3 w-5 h-5 text-gray-400"></i>
+                <input id="email" name="email" type="email" required
+                    class="block w-full pl-10 p-3 bg-gray-700 border border-gray-600 rounded-md focus:ring-purple-500 focus:border-purple-500 text-white transition-all duration-300"
+                    placeholder="you@example.com">
+            </div>
+        </div>
+        <div class="relative">
+            <label for="password" class="block text-sm font-medium text-gray-300">Password</label>
+            <div class="mt-1 flex items-center">
+                <i data-lucide="lock" class="absolute left-3 w-5 h-5 text-gray-400"></i>
+                <input id="password" name="password" type="password" required
+                    class="block w-full pl-10 p-3 bg-gray-700 border border-gray-600 rounded-md focus:ring-purple-500 focus:border-purple-500 text-white transition-all duration-300"
+                    placeholder="••••••••">
+            </div>
+        </div>
+        <button type="submit" id="signup-button"
+            class="w-full flex items-center justify-center bg-purple-600 text-white p-3 rounded-md hover:bg-purple-700 hover:scale-105 transition-all duration-300">
+            <i data-lucide="user-plus" class="mr-2 w-5 h-5" style="stroke-width: 3px;"></i> Sign Up
+            <img src="/static/images/Hourglass.gif" id="signup-loading" class="hidden w-5 h-5 ml-2" alt="Loading">
+        </button>
+    </form>
+    <p class="mt-4 text-center text-gray-400">
+        Already have an account? <a href="/login" class="text-purple-400 hover:underline">Log In</a>
+    </p>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        lucide.createIcons();
+        const form = document.getElementById("signup-form");
+        const button = document.getElementById("signup-button");
+        const loadingGif = document.getElementById("signup-loading");
+
+        form.addEventListener("submit", (e) => {
+            // Show loading GIF
+            button.querySelector("i").classList.add("hidden");
+            loadingGif.classList.remove("hidden");
+            button.disabled = true;
+        });
+    });
+</script>
+
+{% endblock %}

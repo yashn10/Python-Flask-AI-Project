@@ -7,6 +7,10 @@
     <title>ArtistryAI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="/static/css/styles.css">
     <style>
@@ -26,20 +30,28 @@
     </div>
 
     <!-- Navigation -->
-    <header class="relative z-10 bg-gradient-to-r from-indigo-900 via-gray-800 to-indigo-900 p-4 shadow-md">
+    <header class="relative z-10 bg-gradient-to-r from-indigo-900 via-gray-800 to-indigo-900 p-3 shadow-md">
         <nav class="container mx-auto flex justify-between items-center">
             <h1 class="text-2xl font-bold text-white hover:text-indigo-300 transition duration-300 ease-in-out">
                 ArtistryAI</h1>
             <div class="space-x-4 flex items-center">
                 <a href="/"
-                    class="flex bg-indigo-800 px-3 py-2 rounded-md hover:bg-indigo-700 hover:text-white transition duration-300 ease-in-out relative group">
-                    <i data-lucide="home" class="icon mr-2"></i> Home
+                    class="flex bg-indigo-800 px-2 py-2 rounded-md hover:bg-indigo-700 hover:text-white transition duration-300 ease-in-out relative group items-center">
+                    <i data-lucide="home" class="icon mr-2 w-4 h-4" style="color: white; stroke-width: 3px;"></i> Home
                     <span
                         class="absolute bottom-0 left-0 w-0 h-0.5 bg-indigo-400 group-hover:w-full transition-all duration-300"></span>
                 </a>
                 <a href="/generate"
-                    class="flex text-gray-200 bg-indigo-800 px-3 py-2 rounded-md hover:bg-indigo-700 hover:text-white transition duration-300 ease-in-out relative group">
-                    <i data-lucide="wand-2" class="icon mr-2"></i> Generate
+                    class="flex bg-indigo-800 px-2 py-2 rounded-md hover:bg-indigo-700 hover:text-white transition duration-300 ease-in-out relative group items-center">
+                    <i data-lucide="wand-2" class="icon mr-2 w-4 h-4" style="color: white; stroke-width: 3px;"></i>
+                    Generate
+                    <span
+                        class="absolute bottom-0 left-0 w-0 h-0.5 bg-indigo-400 group-hover:w-full transition-all duration-300"></span>
+                </a>
+                <a href="/login"
+                    class="flex bg-indigo-800 px-2 py-2 rounded-md hover:bg-indigo-700 hover:text-white transition duration-300 ease-in-out relative group items-center">
+                    <i data-lucide="log-in" class="icon mr-2 w-4 h-4" style="color: white; stroke-width: 3px;"></i>
+                    Login
                     <span
                         class="absolute bottom-0 left-0 w-0 h-0.5 bg-indigo-400 group-hover:w-full transition-all duration-300"></span>
                 </a>

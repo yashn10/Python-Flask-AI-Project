@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, send_file
+import re
+from flask import Flask, jsonify, render_template, request, send_file, session
 import os
 import base64
 from together import Together # type: ignore
@@ -31,6 +32,16 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 @app.route("/")
 def index():
     return render_template("index.html")
+
+
+@app.route("/login")
+def login():
+    return render_template("login.html")
+
+
+@app.route("/signup")
+def signup():
+    return render_template("signup.html")
 
 
 @app.route("/generate", methods=["GET", "POST"])
@@ -91,6 +102,39 @@ def generate():
             return render_template("generate.html", error=f"Failed to generate images: {str(e)}. Please check your API key or try again later.")
 
     return render_template("generate.html")
+
+
+@app.route("/enhance_prompt", methods=["POST"])
+def enhance_prompt():
+    # if "user" not in session:
+    #     return jsonify({"error": "Unauthorized"}), 401
+    data = request.get_json()
+    user_prompt = data.get("prompt", "").strip()
+    if not user_prompt:
+        return jsonify({"error": "Prompt is required"}), 400
+
+    try:
+        response = client.chat.completions.create(
+            model="deepseek-ai/DeepSeek-R1-Distill-Llama-70B-free",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are an expert in generating high-quality prompts for AI image generation. Transform the user's input into a detailed, professional prompt optimized for creating visually stunning images. Include specific details about style, lighting, composition, and mood, while preserving the core idea of the user's input. Respond with only the enhanced prompt, without any additional text, explanations, or tags like <think>."
+                },
+                {
+                    "role": "user",
+                    "content": f"Enhance this prompt: {user_prompt}"
+                }
+            ],
+            stream=False
+        )
+        raw_prompt = response.choices[0].message.content.strip()
+        enhanced_prompt = re.sub(r'<think>.*?</think>\s*', '', raw_prompt, flags=re.DOTALL)
+        enhanced_prompt = enhanced_prompt.strip()
+        return jsonify({"enhanced_prompt": enhanced_prompt})
+    except Exception as e:
+        logger.error(f"Prompt enhancement error: {str(e)}")
+        return jsonify({"error": f"Failed to enhance prompt: {str(e)}"}), 500
 
 
 @app.route("/images/<filename>")
