@@ -1,15 +1,16 @@
 :root {
-    --bg0: #070a14;
-    --bg1: #0b1020;
-    --card: rgba(255, 255, 255, 0.06);
-    --cardBorder: rgba(255, 255, 255, 0.10);
-    --text: rgba(255, 255, 255, 0.92);
-    --muted: rgba(255, 255, 255, 0.66);
-    --muted2: rgba(255, 255, 255, 0.48);
-    --accent: #8b5cf6;
-    --accent2: #22d3ee;
-    --danger: #fb7185;
-    --ring: rgba(139, 92, 246, 0.35);
+    /* Light, professional palette */
+    --bg0: #f7f8ff;
+    --bg1: #eef2ff;
+    --card: rgba(255, 255, 255, 0.72);
+    --cardBorder: rgba(15, 23, 42, 0.10);
+    --text: rgba(15, 23, 42, 0.92);
+    --muted: rgba(15, 23, 42, 0.70);
+    --muted2: rgba(15, 23, 42, 0.55);
+    --accent: #6d28d9;
+    --accent2: #0891b2;
+    --danger: #e11d48;
+    --ring: rgba(109, 40, 217, 0.20);
 }
 
 html,
@@ -41,18 +42,19 @@ body {
     position: absolute;
     inset: -20%;
     background:
-        radial-gradient(1200px 800px at 15% 25%, rgba(139, 92, 246, 0.22), transparent 60%),
-        radial-gradient(900px 700px at 85% 20%, rgba(34, 211, 238, 0.16), transparent 55%),
-        radial-gradient(1000px 700px at 60% 85%, rgba(236, 72, 153, 0.12), transparent 55%);
-    filter: blur(2px);
+        radial-gradient(1100px 760px at 15% 25%, rgba(109, 40, 217, 0.18), transparent 60%),
+        radial-gradient(900px 700px at 85% 20%, rgba(8, 145, 178, 0.14), transparent 55%),
+        radial-gradient(1000px 700px at 60% 85%, rgba(236, 72, 153, 0.10), transparent 55%),
+        radial-gradient(1200px 820px at 45% 35%, rgba(99, 102, 241, 0.10), transparent 62%);
+    filter: blur(1px);
 }
 
 .app-bg__noise {
     position: absolute;
     inset: 0;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");
-    mix-blend-mode: overlay;
-    opacity: 0.25;
+    mix-blend-mode: multiply;
+    opacity: 0.10;
 }
 
 .app-mark {
@@ -62,9 +64,9 @@ body {
     width: 36px;
     height: 36px;
     border-radius: 12px;
-    background: linear-gradient(135deg, rgba(139, 92, 246, 0.30), rgba(34, 211, 238, 0.18));
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    background: linear-gradient(135deg, rgba(109, 40, 217, 0.16), rgba(8, 145, 178, 0.10));
+    border: 1px solid rgba(15, 23, 42, 0.10);
+    box-shadow: 0 14px 40px rgba(15, 23, 42, 0.14);
 }
 
 .app-navlink {
@@ -73,29 +75,32 @@ body {
     gap: 10px;
     padding: 10px 12px;
     border-radius: 12px;
-    color: rgba(255, 255, 255, 0.80);
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(15, 23, 42, 0.78);
+    background: rgba(255, 255, 255, 0.62);
+    border: 1px solid rgba(15, 23, 42, 0.10);
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
     transition: transform 160ms ease, background 160ms ease, border-color 160ms ease, color 160ms ease;
 }
 
 .app-navlink:hover {
     transform: translateY(-1px);
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.14);
-    color: rgba(255, 255, 255, 0.92);
+    background: rgba(255, 255, 255, 0.82);
+    border-color: rgba(15, 23, 42, 0.14);
+    color: rgba(15, 23, 42, 0.92);
 }
 
 .app-navlink--primary {
-    background: linear-gradient(135deg, rgba(139, 92, 246, 0.30), rgba(34, 211, 238, 0.14));
-    border-color: rgba(139, 92, 246, 0.35);
+    background: linear-gradient(135deg, rgba(109, 40, 217, 0.16), rgba(8, 145, 178, 0.10));
+    border-color: rgba(109, 40, 217, 0.22);
 }
 
 .app-surface {
     background: var(--card);
     border: 1px solid var(--cardBorder);
     border-radius: 18px;
-    box-shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
+    box-shadow:
+        0 22px 70px rgba(15, 23, 42, 0.12),
+        0 1px 0 rgba(255, 255, 255, 0.45) inset;
     backdrop-filter: blur(14px);
 }
 
@@ -147,7 +152,9 @@ body {
 
 .card-hover:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    box-shadow:
+        0 28px 90px rgba(15, 23, 42, 0.16),
+        0 1px 0 rgba(255, 255, 255, 0.55) inset;
 }
 
 /* Fade-in animation */

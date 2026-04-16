@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0b1020">
+    <meta name="theme-color" content="#eef2ff">
     <title>ArtistryAI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -18,7 +18,7 @@
 </head>
 
 <body
-    class="min-h-screen flex flex-col text-white bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-950 animate-bg-shift">
+    class="min-h-screen flex flex-col text-slate-900 bg-gradient-to-br from-indigo-50 via-white to-cyan-50 animate-bg-shift">
     <!-- Ambient Background -->
     <div class="app-bg" aria-hidden="true">
         <div class="app-bg__mesh"></div>
@@ -26,13 +26,14 @@
     </div>
 
     <!-- Navigation -->
-    <header class="relative z-10 border-b border-white/10 bg-slate-950/30 backdrop-blur">
+    <header class="relative z-10 border-b border-slate-900/10 bg-white/40 backdrop-blur">
         <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
             <a href="/" class="flex items-center gap-3 group">
                 <span class="app-mark">
                     <i data-lucide="sparkles" class="w-5 h-5" style="stroke-width: 2.5px;"></i>
                 </span>
-                <span class="text-lg md:text-xl font-semibold tracking-tight group-hover:text-white/90 transition">
+                <span
+                    class="text-lg md:text-xl font-semibold tracking-tight text-slate-900 group-hover:text-slate-900/80 transition">
                     ArtistryAI
                 </span>
             </a>
@@ -45,6 +46,10 @@
                 <a href="/generate" class="app-navlink app-navlink--primary">
                     <i data-lucide="wand-2" class="w-4 h-4" style="stroke-width: 2.5px;"></i>
                     <span>Generate</span>
+                </a>
+                <a href="/generate-text" class="app-navlink app-navlink--primary">
+                    <i data-lucide="type" class="w-4 h-4" style="stroke-width: 2.5px;"></i>
+                    <span>Generate Text</span>
                 </a>
                 <a href="/login" class="app-navlink">
                     <i data-lucide="log-in" class="w-4 h-4" style="stroke-width: 2.5px;"></i>
@@ -60,10 +65,10 @@
     </main>
 
     <!-- Footer -->
-    <footer class="relative z-10 border-t border-white/10 bg-slate-950/30 backdrop-blur">
+    <footer class="relative z-10 border-t border-slate-900/10 bg-white/40 backdrop-blur">
         <div class="container mx-auto px-4 py-6 flex flex-col sm:flex-row items-center justify-between gap-2">
-            <p class="text-white/70 text-sm">© 2026 ArtistryAI. Powered by Together AI.</p>
-            <div class="text-white/60 text-sm flex items-center gap-2">
+            <p class="text-slate-700 text-sm">© 2026 ArtistryAI. Powered by Together AI.</p>
+            <div class="text-slate-600 text-sm flex items-center gap-2">
                 <i data-lucide="shield" class="w-4 h-4" style="stroke-width: 2.5px;"></i>
                 <span>Your prompts stay in your session.</span>
             </div>

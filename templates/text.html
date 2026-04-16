@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="max-w-4xl mx-auto app-surface p-6 md:p-8 card-hover animate-fade-in">
+
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
+        <div>
+            <h2 class="app-title text-2xl md:text-3xl font-semibold">Generate text</h2>
+            <p class="text-slate-700 mt-1">Write a prompt and generate AI text instantly.</p>
+        </div>
+        <div class="flex items-center gap-2 text-slate-600 text-sm">
+            <i data-lucide="bot" class="w-4 h-4"></i>
+            <span>Local LLM · Streaming</span>
+        </div>
+    </div>
+
+    <!-- Form -->
+    <form id="text-form" class="space-y-6">
+
+        <div>
+            <label class="block text-sm font-medium text-slate-700">Model</label>
+            <select id="model" class="mt-2 w-full p-3 bg-white/70 border border-slate-900/10 rounded-xl">
+
+                <!-- ⚡ Ultra Fast -->
+                <option value="tinyllama">⚡ Ultra Fast (TinyLLaMA - instant)</option>
+                <option value="phi">⚡ Very Fast (Phi - lightweight)</option>
+
+                <!-- 🚀 Fast & Recommended -->
+                <option value="phi3" selected>🚀 Fast & Smart (Phi-3 - best default)</option>
+                <option value="gemma:2b">🚀 Fast + Better Quality (Gemma 2B)</option>
+
+                <!-- 💻 Coding -->
+                <option value="deepseek-coder">💻 Coding Fast (DeepSeek Coder)</option>
+                <option value="codellama">💻 Coding Advanced (CodeLLaMA)</option>
+
+                <!-- ⚖️ Balanced -->
+                <option value="mistral">⚖️ Balanced (Mistral)</option>
+
+                <!-- 🧠 High Quality -->
+                <option value="llama3">🧠 High Quality (LLaMA 3)</option>
+
+            </select>
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-slate-700">Prompt</label>
+            <textarea id="prompt" rows="2" required
+                class="mt-2 block w-full p-4 bg-white/70 border border-slate-900/10 rounded-xl"
+                placeholder="Explain microservices in simple terms..."></textarea>
+        </div>
+
+        <button type="submit" id="generate-btn"
+            class="w-full flex items-center justify-center bg-purple-700 text-white p-3.5 rounded-xl">
+            <i data-lucide="sparkles" id="generate-icon" class="mr-2 w-5 h-5"></i>
+            Generate text
+            <img src="/static/images/Hourglass.gif" id="loading" class="hidden w-5 h-5 ml-2">
+        </button>
+    </form>
+
+    <!-- Result -->
+    <div id="result-container" class="mt-8 hidden">
+        <h3 class="text-xl font-semibold mb-4">Generated result</h3>
+        <div class="bg-white/70 border rounded-xl p-4 h-64 overflow-y-auto">
+            <pre id="result-text" class="whitespace-pre-wrap"></pre>
+        </div>
+    </div>
+
+    <!-- Error -->
+    <div id="error-box" class="hidden mt-6 text-red-600"></div>
+
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+        lucide.createIcons();
+
+        const form = document.getElementById("text-form");
+        const button = document.getElementById("generate-btn");
+        const icon = document.getElementById("generate-icon");
+        const loading = document.getElementById("loading");
+
+        const resultContainer = document.getElementById("result-container");
+        const resultText = document.getElementById("result-text");
+        const errorBox = document.getElementById("error-box");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const prompt = document.getElementById("prompt").value.trim();
+            const model = document.getElementById("model").value;
+
+            if (!prompt) return;
+
+            // Reset UI
+            resultText.textContent = "";
+            resultContainer.classList.remove("hidden");
+            errorBox.classList.add("hidden");
+
+            icon.classList.add("hidden");
+            loading.classList.remove("hidden");
+            button.disabled = true;
+
+            try {
+                const response = await fetch("/generate-text", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ prompt, model })
+                });
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+
+                    const chunk = decoder.decode(value);
+
+                    // ✅ smooth streaming
+                    resultText.textContent += chunk;
+
+                    // ✅ auto-scroll
+                    resultText.scrollTop = resultText.scrollHeight;
+                }
+
+            } catch (err) {
+                errorBox.innerText = "Error: " + err.message;
+                errorBox.classList.remove("hidden");
+                resultContainer.classList.add("hidden");
+            }
+
+            icon.classList.remove("hidden");
+            loading.classList.add("hidden");
+            button.disabled = false;
+        });
+
+    });
+</script>
+
+{% endblock %}

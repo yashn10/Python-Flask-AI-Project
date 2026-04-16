@@ -1,3 +1,4 @@
+from pyexpat import model
 import re
 from flask import Flask, jsonify, render_template, request, send_file, session
 import os
@@ -7,11 +8,19 @@ import uuid
 import logging
 import tempfile
 from dotenv import load_dotenv # type: ignore
+import requests
+import json
+from flask import Response
 
 app = Flask(__name__)
 
 # Load environment variables from .env file
 load_dotenv()
+
+OLLAMA_URL = os.getenv("OLLAMA_URL")
+DEFAULT_MODEL = os.getenv("DEFAULT_MODEL", "phi3")
+MAX_TOKENS = int(os.getenv("MAX_TOKENS", 200))
+TEMPERATURE = float(os.getenv("TEMPERATURE", 0.7))
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -102,6 +111,55 @@ def generate():
             return render_template("generate.html", error=f"Failed to generate images: {str(e)}. Please check your API key or try again later.")
 
     return render_template("generate.html")
+
+
+@app.route("/generate-text", methods=["GET", "POST"])
+def generate_text():
+
+    # 👉 Load page
+    if request.method == "GET":
+        return render_template("text.html")
+
+    # 👉 Handle API request
+    data = request.get_json(silent=True) or {}
+
+    prompt = data.get("prompt", "").strip()
+    model = data.get("model", "phi3")
+
+    # सुरक्षा (important)
+    allowed_models = ["deepseek-coder", "mistral", "llama3", "phi3", "phi", "gemma:2b", "codellama", "tinyllama"]
+    if model not in allowed_models:
+        model = "phi3"
+
+    if not prompt:
+        return jsonify({"error": "Prompt required"})
+
+    def generate():
+        try:
+            response = requests.post(
+                f"{OLLAMA_URL}/api/generate",
+                json={
+                    "model": model or DEFAULT_MODEL,
+                    "prompt": prompt,
+                    "stream": True,
+                    "options": {
+                        "num_predict": MAX_TOKENS,
+                        "temperature": TEMPERATURE
+                    }
+                },
+                stream=True,
+                timeout=120
+            )
+
+            for line in response.iter_lines():
+                if line:
+                    chunk = json.loads(line.decode("utf-8"))
+                    yield chunk.get("response", "")
+
+        except Exception as e:
+            yield f"\n[Error: {str(e)}]"
+
+    return Response(generate(), content_type="text/plain")
 
 
 @app.route("/enhance_prompt", methods=["POST"])
