@@ -1,9 +1,106 @@
+:root {
+    --bg0: #070a14;
+    --bg1: #0b1020;
+    --card: rgba(255, 255, 255, 0.06);
+    --cardBorder: rgba(255, 255, 255, 0.10);
+    --text: rgba(255, 255, 255, 0.92);
+    --muted: rgba(255, 255, 255, 0.66);
+    --muted2: rgba(255, 255, 255, 0.48);
+    --accent: #8b5cf6;
+    --accent2: #22d3ee;
+    --danger: #fb7185;
+    --ring: rgba(139, 92, 246, 0.35);
+}
+
+html,
 body {
-    font-family: "Roboto", sans-serif;
+    height: 100%;
+}
+
+body {
+    font-family: "Roboto", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
     font-optical-sizing: auto;
-    font-weight: 500;
+    font-weight: 450;
     font-style: normal;
     font-variation-settings: "wdth" 100;
+    color: var(--text);
+}
+
+::selection {
+    background: rgba(139, 92, 246, 0.35);
+}
+
+.app-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.app-bg__mesh {
+    position: absolute;
+    inset: -20%;
+    background:
+        radial-gradient(1200px 800px at 15% 25%, rgba(139, 92, 246, 0.22), transparent 60%),
+        radial-gradient(900px 700px at 85% 20%, rgba(34, 211, 238, 0.16), transparent 55%),
+        radial-gradient(1000px 700px at 60% 85%, rgba(236, 72, 153, 0.12), transparent 55%);
+    filter: blur(2px);
+}
+
+.app-bg__noise {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+    opacity: 0.25;
+}
+
+.app-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.30), rgba(34, 211, 238, 0.18));
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.app-navlink {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.80);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: transform 160ms ease, background 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+
+.app-navlink:hover {
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.14);
+    color: rgba(255, 255, 255, 0.92);
+}
+
+.app-navlink--primary {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.30), rgba(34, 211, 238, 0.14));
+    border-color: rgba(139, 92, 246, 0.35);
+}
+
+.app-surface {
+    background: var(--card);
+    border: 1px solid var(--cardBorder);
+    border-radius: 18px;
+    box-shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(14px);
+}
+
+.app-title {
+    letter-spacing: -0.02em;
 }
 
 @keyframes bg-shift {
@@ -72,7 +169,19 @@ body {
 
 /* Input focus animation */
 input:focus,
-textarea:focus {
-    box-shadow: 0 0 8px rgba(168, 85, 247, 0.5);
-    transform: scale(1.02);
+textarea:focus,
+select:focus {
+    box-shadow: 0 0 0 4px var(--ring);
+}
+
+/* Better defaults for form controls inside dark glass surfaces */
+input,
+textarea,
+select {
+    outline: none;
+}
+
+/* Make lucide icons align nicely inside buttons/links */
+svg.lucide {
+    flex: 0 0 auto;
 }

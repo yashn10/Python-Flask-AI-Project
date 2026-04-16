@@ -1,38 +1,49 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="max-w-md mx-auto bg-gray-800 bg-opacity-80 rounded-lg shadow-xl p-8 mt-10 card-hover animate-fade-in">
-    <h2 class="text-2xl font-semibold text-purple-400 mb-6 text-center">Log In</h2>
+<div class="max-w-md mx-auto app-surface p-6 md:p-8 card-hover animate-fade-in">
+    <div class="text-center mb-7">
+        <div class="mx-auto mb-4 app-mark" style="width: 44px; height: 44px;">
+            <i data-lucide="log-in" class="w-5 h-5" style="stroke-width: 2.5px;"></i>
+        </div>
+        <h2 class="app-title text-2xl font-semibold">Welcome back</h2>
+        <p class="text-white/65 mt-2">Log in to continue generating and managing your images.</p>
+    </div>
     {% if error %}
-    <p class="text-red-400 mb-4 text-center">{{ error }}</p>
+    <div class="mb-5 rounded-xl border border-rose-400/30 bg-rose-500/10 px-4 py-3 text-rose-200">
+        <div class="flex items-start gap-2">
+            <i data-lucide="triangle-alert" class="w-5 h-5 mt-0.5" style="stroke-width: 2.5px;"></i>
+            <p class="text-sm">{{ error }}</p>
+        </div>
+    </div>
     {% endif %}
     <form id="login-form" action="/login" method="POST" class="space-y-6">
         <div class="relative">
-            <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
+            <label for="email" class="block text-sm font-medium text-white/70">Email</label>
             <div class="mt-1 flex items-center">
-                <i data-lucide="mail" class="absolute left-3 w-5 h-5 text-gray-400"></i>
+                <i data-lucide="mail" class="absolute left-3 w-5 h-5 text-white/40"></i>
                 <input id="email" name="email" type="email" required
-                    class="block w-full pl-10 p-3 bg-gray-700 border border-gray-600 rounded-md focus:ring-purple-500 focus:border-purple-500 text-white transition-all duration-300"
+                    class="block w-full pl-10 p-3 bg-white/5 border border-white/10 rounded-xl focus:border-purple-400/50 text-white placeholder:text-white/40 transition"
                     placeholder="you@example.com">
             </div>
         </div>
         <div class="relative">
-            <label for="password" class="block text-sm font-medium text-gray-300">Password</label>
+            <label for="password" class="block text-sm font-medium text-white/70">Password</label>
             <div class="mt-1 flex items-center">
-                <i data-lucide="lock" class="absolute left-3 w-5 h-5 text-gray-400"></i>
+                <i data-lucide="lock" class="absolute left-3 w-5 h-5 text-white/40"></i>
                 <input id="password" name="password" type="password" required
-                    class="block w-full pl-10 p-3 bg-gray-700 border border-gray-600 rounded-md focus:ring-purple-500 focus:border-purple-500 text-white transition-all duration-300"
+                    class="block w-full pl-10 p-3 bg-white/5 border border-white/10 rounded-xl focus:border-purple-400/50 text-white placeholder:text-white/40 transition"
                     placeholder="••••••••">
             </div>
         </div>
         <button type="submit" id="login-button"
-            class="w-full flex items-center justify-center bg-purple-600 text-white p-3 rounded-md hover:bg-purple-700 hover:scale-105 transition-all duration-300">
-            <i data-lucide="log-in" class="mr-2 w-5 h-5" style="stroke-width: 3px;"></i> Log In
+            class="w-full flex items-center justify-center bg-purple-600/90 text-white p-3.5 rounded-xl hover:bg-purple-600 hover:scale-[1.01] transition-all duration-300 border border-purple-400/20">
+            <i data-lucide="log-in" class="mr-2 w-5 h-5" style="stroke-width: 2.5px;"></i> Log in
             <img src="/static/images/Hourglass.gif" id="login-loading" class="hidden w-5 h-5 ml-2" alt="Loading">
         </button>
     </form>
-    <p class="mt-4 text-center text-gray-400">
-        Don't have an account? <a href="/signup" class="text-purple-400 hover:underline">Sign Up</a>
+    <p class="mt-5 text-center text-white/60">
+        Don't have an account? <a href="/signup" class="text-purple-300 hover:text-white transition underline-offset-4 hover:underline">Sign up</a>
     </p>
 </div>
 
@@ -46,7 +57,8 @@
 
         form.addEventListener("submit", (e) => {
             // Show loading GIF
-            button.querySelector("i").classList.add("hidden");
+            const icon = button.querySelector("i");
+            if (icon) icon.classList.add("hidden");
             loadingGif.classList.remove("hidden");
             button.disabled = true;
         });

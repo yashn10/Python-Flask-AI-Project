@@ -1,4 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // Register ScrollTrigger if available (prevents console errors if plugin fails to load)
+    if (window.ScrollTrigger && gsap && gsap.registerPlugin) {
+        gsap.registerPlugin(ScrollTrigger);
+    }
+
     // Fade in main content
     gsap.from("main", {
         opacity: 0,
@@ -9,15 +14,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Animate cards on scroll
     gsap.utils.toArray(".card").forEach(card => {
-        gsap.from(card, {
+        const config = {
             opacity: 0,
             y: 30,
-            duration: 0.8,
-            scrollTrigger: {
+            duration: 0.8
+        };
+
+        // Only add scrollTrigger if the plugin is present
+        if (window.ScrollTrigger) {
+            config.scrollTrigger = {
                 trigger: card,
-                start: "top 80%"
-            }
-        });
+                start: "top 85%"
+            };
+        }
+
+        gsap.from(card, config);
     });
 
     // Animate fullscreen modal

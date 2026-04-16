@@ -1,34 +1,53 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="py-8">
-    <h2 class="text-3xl font-semibold text-center mb-5">Your Generated Images</h2>
-    <p class="text-gray-300 text-center mb-8">Your Prompt: {{ prompt }}</p>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+<div class="py-2 md:py-4">
+    <div class="max-w-5xl mx-auto">
+        <div class="app-surface p-6 md:p-8 mb-6 animate-fade-in">
+            <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                <div>
+                    <h2 class="app-title text-2xl md:text-3xl font-semibold">Your gallery</h2>
+                    <p class="text-white/65 mt-2">Prompt</p>
+                    <p class="mt-1 text-white/85 leading-relaxed break-words">{{ prompt }}</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <a href="/generate"
+                        class="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white/90 px-4 py-2.5 rounded-xl transition">
+                        <i data-lucide="rotate-ccw" class="w-4 h-4" style="stroke-width: 2.5px;"></i>
+                        Generate more
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
         {% for image in images %}
-        <div class="card bg-gray-800 bg-opacity-80 rounded-lg overflow-hidden card-hover">
-            <img src="/images/{{ image }}" alt="Generated Image" class="w-full h-64 object-cover cursor-pointer"
-                onclick="openFullscreen('/images/{{ image }}')">
-            <div class="p-4 flex justify-between">
+        <div class="card app-surface overflow-hidden card-hover">
+            <button type="button" class="block w-full text-left" onclick="openFullscreen('/images/{{ image }}')">
+                <img src="/images/{{ image }}" alt="Generated Image"
+                    class="w-full h-64 object-cover cursor-pointer hover:opacity-95 transition">
+            </button>
+            <div class="p-4 flex items-center justify-between gap-2">
                 <a href="/download/{{ image }}"
-                    class="flex items-center justify-center inline-block text-center bg-green-500 text-white p-2 rounded-md hover:bg-green-600 transition"><i
-                        class="mr-2" data-lucide="download"></i>Download</a>
-                <button onclick="openFullscreen('/images/{{ image }}')"
-                    class="flex items-center justify-center inline-block text-center bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition"><i
-                        class="mr-2" data-lucide="maximize"></i>Fullscreen</button>
+                    class="inline-flex items-center justify-center gap-2 bg-emerald-500/90 hover:bg-emerald-500 text-white px-3 py-2 rounded-xl transition">
+                    <i data-lucide="download" class="w-4 h-4" style="stroke-width: 2.5px;"></i>
+                    <span class="text-sm font-medium">Download</span>
+                </a>
+                <button type="button" onclick="openFullscreen('/images/{{ image }}')"
+                    class="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white/90 px-3 py-2 rounded-xl transition">
+                    <i data-lucide="maximize" class="w-4 h-4" style="stroke-width: 2.5px;"></i>
+                    <span class="text-sm font-medium">Fullscreen</span>
+                </button>
             </div>
         </div>
         {% endfor %}
-    </div>
-    <div class="text-center mt-8">
-        <a href="/generate"
-            class="inline-block bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition card-hover">Generate
-            More</a>
     </div>
 </div>
 
 <!-- Fullscreen Modal -->
 <div id="fullscreen-modal" class="fixed inset-0 bg-black bg-opacity-90 hidden flex items-center justify-center z-50">
-    <img id="fullscreen-image" src="" alt="Fullscreen Image" class="max-w-full max-h-full object-contain">
+    <div class="absolute inset-0" onclick="closeFullscreen()"></div>
+    <img id="fullscreen-image" src="" alt="Fullscreen Image" class="relative max-w-[92vw] max-h-[88vh] object-contain">
     <button onclick="closeFullscreen()"
         class="absolute top-4 right-4 text-white bg-gray-800 p-2 rounded-full hover:bg-gray-700 transition">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
